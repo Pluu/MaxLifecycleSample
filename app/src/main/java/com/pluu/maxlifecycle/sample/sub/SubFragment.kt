@@ -1,4 +1,4 @@
-package com.pluu.fragment.lifecycleowner.sample
+package com.pluu.maxlifecycle.sample.sub
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,16 +7,19 @@ import android.view.ViewGroup
 import androidx.annotation.ColorInt
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
-import com.pluu.fragment.lifecycleowner.LazyLifecycleFragment
-import com.pluu.fragment.lifecycleowner.sample.databinding.FragmentSampleBinding
+import com.pluu.maxlifecycle.sample.SampleFragment
+import com.pluu.maxlifecycle.sample.databinding.FragmentSubBinding
 import logcat.logcat
 
-class SampleFragment : LazyLifecycleFragment() {
+class SubFragment : SampleFragment() {
 
-    private var _binding: FragmentSampleBinding? = null
-    private val binding: FragmentSampleBinding get() = _binding!!
+    override val key: String
+        get() = title
 
-    private val viewModel by viewModels<SampleViewModel>()
+    private var _binding: FragmentSubBinding? = null
+    private val binding: FragmentSubBinding get() = _binding!!
+
+    private val viewModel by viewModels<SubViewModel>()
 
     private val title: String by lazy {
         arguments?.getString("title").orEmpty()
@@ -25,14 +28,11 @@ class SampleFragment : LazyLifecycleFragment() {
         arguments?.getInt("color") ?: 0
     }
 
-    override val lazyKey: String
-        get() = title
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSampleBinding.inflate(
+        _binding = FragmentSubBinding.inflate(
             layoutInflater,
             container,
             false
@@ -66,8 +66,8 @@ class SampleFragment : LazyLifecycleFragment() {
     }
 
     companion object {
-        fun newInstance(title: String, @ColorInt colorValue: Int): SampleFragment {
-            return SampleFragment().apply {
+        fun newInstance(title: String, @ColorInt colorValue: Int): SubFragment {
+            return SubFragment().apply {
                 arguments = bundleOf(
                     "title" to title,
                     "color" to colorValue

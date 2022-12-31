@@ -1,4 +1,4 @@
-package com.pluu.fragment.lifecycleowner.sample
+package com.pluu.maxlifecycle.sample.sub
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import logcat.logcat
 import kotlin.random.Random
 
-class SampleViewModel : ViewModel() {
+class SubViewModel : ViewModel() {
     private val _test = MutableLiveData<String>()
     val test: LiveData<String> get() = _test
 

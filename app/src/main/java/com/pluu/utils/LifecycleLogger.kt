@@ -1,4 +1,4 @@
-package com.pluu.sample.myapplication.util
+package com.pluu.utils
 
 import android.app.Activity
 import android.app.Application
@@ -11,7 +11,7 @@ import androidx.fragment.app.FragmentManager
 import logcat.logcat
 
 private val Any.lifecycleSimpleName: String
-    get() = "[Lifecycle] ${javaClass.simpleName}"
+    get() = javaClass.simpleName
 
 private fun Activity.printInfo(message: String) {
     logcat {
@@ -21,7 +21,7 @@ private fun Activity.printInfo(message: String) {
 
 private fun Fragment.printInfo(message: String) {
     logcat {
-        "$lifecycleSimpleName(${hashCode()}) $message"
+        "$lifecycleSimpleName(${hashCode()}) ${toString()} $message"
     }
 }
 

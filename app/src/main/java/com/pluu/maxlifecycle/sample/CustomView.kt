@@ -1,4 +1,4 @@
-package com.pluu.fragment.lifecycleowner.sample
+package com.pluu.maxlifecycle.sample
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,7 +8,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.pluu.fragment.lifecycleowner.sample.databinding.ViewCustomBinding
+import com.pluu.maxlifecycle.sample.databinding.ViewCustomBinding
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive

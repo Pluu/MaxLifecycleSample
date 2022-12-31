@@ -1,7 +1,7 @@
-package com.pluu.fragment.lifecycleowner.sample
+package com.pluu.maxlifecycle.sample
 
 import android.app.Application
-import com.pluu.sample.myapplication.util.registerLifecycleCallbacks
+import com.pluu.utils.registerLifecycleCallbacks
 import logcat.AndroidLogcatLogger
 import logcat.LogPriority
 

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".SampleFragment">
+    tools:context=".sub.SubFragment">
 
     <TextView
         android:id="@+id/tvText"
@@ -64,7 +64,7 @@
 
     </LinearLayout>
 
-    <com.pluu.fragment.lifecycleowner.sample.CustomView
+    <com.pluu.maxlifecycle.sample.CustomView
         android:id="@+id/customView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
