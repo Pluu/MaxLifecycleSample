@@ -54,7 +54,7 @@ class SubFragment : SampleFragment() {
             binding.customView.stop()
         }
 
-        viewModel.test.observe(viewLifecycleOwner) {
+        viewModel.test.observe(visibleLifecycleOwner) {
             logcat { "[$title] hidden=[$isHidden] viewLifecycleOwner received $it" }
             binding.tvReceived.text = "Received: $it"
         }
