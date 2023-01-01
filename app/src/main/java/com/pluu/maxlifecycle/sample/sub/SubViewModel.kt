@@ -16,7 +16,11 @@ class SubViewModel : ViewModel() {
     fun load() {
         logcat { "load start" }
         viewModelScope.launch {
-            delay(3_000)
+            val totalCount = 3
+            repeat(totalCount) {
+                logcat { "Count down ${totalCount - it}" }
+                delay(1_000)
+            }
             val value = Random.nextInt(5_000_000).toString()
             logcat { "Data Send ==> $value" }
             _test.value = value
