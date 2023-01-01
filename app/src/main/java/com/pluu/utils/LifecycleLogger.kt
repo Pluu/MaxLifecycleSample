@@ -68,19 +68,13 @@ fun registerLifecycleCallbacks(activity: Activity) {
 private fun FragmentManager.autoBindLifecycle() {
     registerFragmentLifecycleCallbacks(
         object : FragmentManager.FragmentLifecycleCallbacks() {
-            override fun onFragmentViewCreated(
+            override fun onFragmentAttached(
                 fm: FragmentManager,
                 f: Fragment,
-                v: View,
-                savedInstanceState: Bundle?
+                context: Context
             ) {
-                super.onFragmentViewCreated(fm, f, v, savedInstanceState)
-                f.printInfo("ViewCreated")
-            }
-
-            override fun onFragmentStopped(fm: FragmentManager, f: Fragment) {
-                super.onFragmentStopped(fm, f)
-                f.printInfo("Stopped")
+                super.onFragmentAttached(fm, f, context)
+                f.printInfo("Attached")
             }
 
             override fun onFragmentCreated(
@@ -93,23 +87,49 @@ private fun FragmentManager.autoBindLifecycle() {
                 f.printInfo("Created")
             }
 
+            override fun onFragmentViewCreated(
+                fm: FragmentManager,
+                f: Fragment,
+                v: View,
+                savedInstanceState: Bundle?
+            ) {
+                super.onFragmentViewCreated(fm, f, v, savedInstanceState)
+                f.printInfo("ViewCreated")
+            }
+
+            override fun onFragmentStarted(fm: FragmentManager, f: Fragment) {
+                super.onFragmentStarted(fm, f)
+                f.printInfo("Started")
+            }
+
             override fun onFragmentResumed(fm: FragmentManager, f: Fragment) {
                 super.onFragmentResumed(fm, f)
                 f.printInfo("Resumed")
             }
 
-            override fun onFragmentAttached(
-                fm: FragmentManager,
-                f: Fragment,
-                context: Context
-            ) {
-                super.onFragmentAttached(fm, f, context)
-                f.printInfo("Attached")
+            override fun onFragmentPaused(fm: FragmentManager, f: Fragment) {
+                super.onFragmentPaused(fm, f)
+                f.printInfo("Paused")
+            }
+
+            override fun onFragmentStopped(fm: FragmentManager, f: Fragment) {
+                super.onFragmentStopped(fm, f)
+                f.printInfo("Stopped")
+            }
+
+            override fun onFragmentViewDestroyed(fm: FragmentManager, f: Fragment) {
+                super.onFragmentViewDestroyed(fm, f)
+                f.printInfo("ViewDestroyed")
             }
 
             override fun onFragmentDestroyed(fm: FragmentManager, f: Fragment) {
                 super.onFragmentDestroyed(fm, f)
                 f.printInfo("Destroyed")
+            }
+
+            override fun onFragmentDetached(fm: FragmentManager, f: Fragment) {
+                super.onFragmentDetached(fm, f)
+                f.printInfo("Detached")
             }
 
             override fun onFragmentSaveInstanceState(
@@ -119,26 +139,6 @@ private fun FragmentManager.autoBindLifecycle() {
             ) {
                 super.onFragmentSaveInstanceState(fm, f, outState)
                 f.printInfo("SaveInstanceState")
-            }
-
-            override fun onFragmentStarted(fm: FragmentManager, f: Fragment) {
-                super.onFragmentStarted(fm, f)
-                f.printInfo("Started")
-            }
-
-            override fun onFragmentViewDestroyed(fm: FragmentManager, f: Fragment) {
-                super.onFragmentViewDestroyed(fm, f)
-                f.printInfo("ViewDestroyed")
-            }
-
-            override fun onFragmentPaused(fm: FragmentManager, f: Fragment) {
-                super.onFragmentPaused(fm, f)
-                f.printInfo("Paused")
-            }
-
-            override fun onFragmentDetached(fm: FragmentManager, f: Fragment) {
-                super.onFragmentDetached(fm, f)
-                f.printInfo("Detached")
             }
         }, true
     )
