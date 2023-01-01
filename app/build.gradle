@@ -8,7 +8,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.pluu.lazy"
+        applicationId "com.pluu.maxlifecycle"
         minSdk 25
         targetSdk 33
         versionCode 1
