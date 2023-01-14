@@ -42,6 +42,11 @@ class SubFragment : SampleFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpViews()
+        setUpViewModels()
+    }
+
+    private fun setUpViews() {
         binding.tvText.text = title
         binding.tvText.setTextColor(color)
         binding.btnButton.setOnClickListener {
@@ -53,9 +58,11 @@ class SubFragment : SampleFragment() {
         binding.btnStop.setOnClickListener {
             binding.customView.stop()
         }
+    }
 
+    private fun setUpViewModels() {
         viewModel.test.observe(visibleLifecycleOwner) {
-            logcat { "[$title] hidden=[$isHidden] viewLifecycleOwner received $it" }
+            logcat { "[$title] hidden=[$isHidden] viewLifecycleOwner received ==> $it" }
             binding.tvReceived.text = "Received: $it"
         }
     }

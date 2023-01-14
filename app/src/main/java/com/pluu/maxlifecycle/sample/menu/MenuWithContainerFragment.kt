@@ -22,19 +22,6 @@ class MenuWithContainerFragment : SampleFragment() {
     private var _binding: FragmentMenuWithContainerBinding? = null
     private val binding: FragmentMenuWithContainerBinding get() = _binding!!
 
-    private val screen1 by lazy {
-        SubFragment.newInstance("Sub1", "FFFF0000".toLong(16).toInt())
-    }
-    private val screen2 by lazy {
-        SubFragment.newInstance("Sub2", "FF1565C0".toLong(16).toInt())
-    }
-    private val screen3 by lazy {
-        SubFragment.newInstance("Sub3", "FFFF6F00".toLong(16).toInt())
-    }
-    private val screen4 by lazy {
-        SubFragment.newInstance("Sub4", "FF85BB5C".toLong(16).toInt())
-    }
-
     private var lastFragmentTag: String? = null
 
     override fun onCreateView(
@@ -52,26 +39,28 @@ class MenuWithContainerFragment : SampleFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.title.text = title
 
-        replace(screen1)
-
-        binding.btn1.setOnClickListener {
-            replace(screen1)
-        }
-        binding.btn2.setOnClickListener {
-            replace(screen2)
-        }
-        binding.btn3.setOnClickListener {
-            replace(screen3)
-        }
-        binding.btn4.setOnClickListener {
-            replace(screen4)
-        }
+        lastFragmentTag = savedInstanceState?.getString(LAST_FRAGMENT_TAG)
+        val menuType = findMenuByTag(lastFragmentTag)
+        bindMenu(menuType)
+        setUpViews()
     }
 
-    private fun replace(fragment: Fragment) {
-        lastFragmentTag = childFragmentManager.showWithLifecycle(fragment, lastFragmentTag)
+    private fun setUpViews() {
+        binding.title.text = title
+
+        binding.btn1.setOnClickListener {
+            bindMenu(SubMenuType.Sub1)
+        }
+        binding.btn2.setOnClickListener {
+            bindMenu(SubMenuType.Sub2)
+        }
+        binding.btn3.setOnClickListener {
+            bindMenu(SubMenuType.Sub3)
+        }
+        binding.btn4.setOnClickListener {
+            bindMenu(SubMenuType.Sub4)
+        }
     }
 
     override fun onDestroyView() {
@@ -79,7 +68,44 @@ class MenuWithContainerFragment : SampleFragment() {
         _binding = null
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString(LAST_FRAGMENT_TAG, lastFragmentTag)
+        super.onSaveInstanceState(outState)
+    }
+
+    private fun findMenuByTag(tag: String?): SubMenuType {
+        if (tag == null) return SubMenuType.Sub1
+        return SubMenuType.values()
+            .firstOrNull {
+                it.tag == tag
+            } ?: SubMenuType.Sub1
+    }
+
+    private fun bindMenu(type: SubMenuType) {
+        val fragment = childFragmentManager.findFragmentByTag(type.tag) ?: when (type) {
+            SubMenuType.Sub1 -> SubFragment.newInstance("Sub1", "FFFF0000".toLong(16).toInt())
+            SubMenuType.Sub2 -> SubFragment.newInstance("Sub2", "FF1565C0".toLong(16).toInt())
+            SubMenuType.Sub3 -> SubFragment.newInstance("Sub3", "FFFF6F00".toLong(16).toInt())
+            SubMenuType.Sub4 -> SubFragment.newInstance("Sub4", "FF85BB5C".toLong(16).toInt())
+        }
+        bindAction(fragment, type.tag)
+    }
+
+    private fun bindAction(fragment: Fragment, tag: String) {
+        childFragmentManager.showWithLifecycle(fragment, tag, lastFragmentTag)
+        lastFragmentTag = tag
+    }
+
+    enum class SubMenuType {
+        Sub1, Sub2, Sub3, Sub4;
+
+        val tag: String
+            get() = name.uppercase()
+    }
+
     companion object {
+        private const val LAST_FRAGMENT_TAG = "LAST_FRAGMENT_TAG"
+
         fun newInstance(title: String): MenuWithContainerFragment {
             return MenuWithContainerFragment().apply {
                 arguments = bundleOf("title" to title)
